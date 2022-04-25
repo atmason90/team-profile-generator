@@ -73,8 +73,32 @@ const addEmployee = () => {
     ])
 }
 
+// function assembleTeam() {
+//     let teamArray = [];
+//     employeePrompt()
+//     .then(function({ name, id, email, role }) {
+//         if(role === "Manager") {
+//             managerPrompt()
+//             .then(function({ officeNumber }) {
+//                 this.employee = new Manager(name, id, email, officeNumber, role);
+//                 teamArray.push(employee);
+//                 addEmployee()
+//                 .then(({ addEmployee }) => {
+//                     if(addEmployee === true) {
+//                         assembleTeam();
+//                     } else {
+//                         return;
+//                     }
+//                 })
+//             })
+              
+//         }
+//     })
+// }    
+
+let teamArray = [];
+
 async function assembleTeam() {
-    let teamArray = [];
     const promise = new Promise((resolve, reject) => {
         employeePrompt()
         .then(function({ name, id, email, role }) {
@@ -83,21 +107,42 @@ async function assembleTeam() {
                 managerPrompt().then(function({ officeNumber }) {
                     this.employee = new Manager(name, id, email, officeNumber, role);
                     teamArray.push(employee);
-                    resolve("complete");
+                    addEmployee()
+                    .then(({ addEmployee }) => {
+                        if(addEmployee === true) {
+                            assembleTeam();
+                        } else {
+                            resolve("complete")
+                        }
+                    })
                 });
 
             } else if (role === "Engineer") {
                 engineerPrompt().then(function({ github }) {
                     this.employee = new Engineer(name, id, email, github, role);
                     teamArray.push(employee);
-                    resolve("complete");
+                    addEmployee()
+                    .then(({ addEmployee }) => {
+                        if(addEmployee === true) {
+                            assembleTeam();
+                        } else {
+                            resolve("complete");
+                        }
+                    })
                 });   
             
             } else if (role === "Intern") {
                 internPrompt().then(function({ school }) {
                     this.employee = new Intern(name, id, email, school, role);
                     teamArray.push(employee);
-                    resolve("complete")
+                    addEmployee()
+                    .then(({ addEmployee }) => {
+                        if(addEmployee === true) {
+                            assembleTeam();
+                        } else {
+                            resolve("complete")
+                        }
+                    })
                 });
             }
         })
