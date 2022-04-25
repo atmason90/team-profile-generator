@@ -73,29 +73,6 @@ const addEmployee = () => {
     ])
 }
 
-// function assembleTeam() {
-//     let teamArray = [];
-//     employeePrompt()
-//     .then(function({ name, id, email, role }) {
-//         if(role === "Manager") {
-//             managerPrompt()
-//             .then(function({ officeNumber }) {
-//                 this.employee = new Manager(name, id, email, officeNumber, role);
-//                 teamArray.push(employee);
-//                 addEmployee()
-//                 .then(({ addEmployee }) => {
-//                     if(addEmployee === true) {
-//                         assembleTeam();
-//                     } else {
-//                         return;
-//                     }
-//                 })
-//             })
-              
-//         }
-//     })
-// }    
-
 let teamArray = [];
 
 async function assembleTeam() {
@@ -159,7 +136,7 @@ async function assembleTeam() {
             return `Office number: ${employee.officeNumber}`;
         }
         if(employee.getRole() === "Engineer") {
-            return `GitHub: ${employee.github}`;
+            return `GitHub: <a href="https://github.com/${employee.github}" target="#">${employee.github}</a>`;
         }
         if(employee.getRole() === "Intern") {
             return `School: ${employee.school}`;
@@ -169,16 +146,16 @@ async function assembleTeam() {
     function htmlCards() {
         let html = "";
         for(var i = 0; i < teamArray.length; i++) {
-            html += `<div class="card bg-dark justify-content-center align-items-center" style="width: 18rem;">
+            html += `<div class="card bg-dark text-light justify-content-center align-items-center" style="width: 18rem;">
             <div class="col card-header">
                 <h4>${teamArray[i].name}</h4>
             </div>
             <div class="col card-header">
                 <h4>${teamArray[i].getRole()}</h4 >
             </div >
-            <ul class="list-group list-group-flush text">
+            <ul class="list-group list-group-flush bg-info text-dark text">
                 <li class="list-group-item">ID: ${teamArray[i].id}</li>
-                <li class="list-group-item">Email: ${teamArray[i].email}</li>
+                <li class="list-group-item">Email: <a href="mailto:${teamArray[i].email}">${teamArray[i].email}</a></li>
                 <li class="list-group-item"> ${roleItem(teamArray[i])}</li>
             </ul>
         </div > `
@@ -193,8 +170,7 @@ async function assembleTeam() {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
         <title>Document</title>
         <style>
             .row {
@@ -207,15 +183,11 @@ async function assembleTeam() {
             .card {
                 padding: 15px;
                 border-radius: 6px;
-                background-color: white;
-                color: lightskyblue;
                 margin: 15px;
                 }
             .text {
                 padding: 15px;
                 border-radius: 6px;
-                background-color: lightskyblue;
-                color: black;
                 margin: 15px;
                 }
             .col {
@@ -226,7 +198,7 @@ async function assembleTeam() {
     </head>
 
         <body>
-            <nav class="navbar navbar-dark bg-dark justify-content-center align-items-center">
+            <nav class="navbar navbar-dark bg-info justify-content-center align-items-center">
                 <span class="navbar-brand mb-0 h1">
                     <h1>My Team</h1>
                 </span>
