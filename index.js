@@ -107,42 +107,43 @@ async function assembleTeam() {
     });
 
     const result = await promise;
-}
 
-function roleItem(employee) {
-    if(employee.role === "Manager") {
-        return `Office number: ${employee.officeNumber}`;
-    }
-    if(employee.role === "Engineer") {
-        return `GitHub: ${employee.github}`;
-    }
-    if(employee.role === "Intern") {
-        return `School: ${employee.school}`;
-    }
-}
 
-function htmlCards() {
-    let html = "";
-    for(var i = 0; i < teamArray.length; i++) {
-        html += `<div class="card bg-dark justify-content-center align-items-center" style="width: 18rem;">
-        <div class="col card-header">
-            <h4>${teamArray[i].name}</h4>
-        </div>
-        <div class="col card-header">
-            <h4>${teamArray[i].role}</h4 >
-        </div >
-        <ul class="list-group list-group-flush text">
-            <li class="list-group-item">ID: ${teamArray[i].id}</li>
-            <li class="list-group-item">Email: ${teamArray[i].email}</li>
-            <li class="list-group-item"> ${roleItem(teamArray[i])}</li>
-        </ul>
-    </div > `
+    function roleItem(employee) {
+        if(employee.getRole() === "Manager") {
+            return `Office number: ${employee.officeNumber}`;
+        }
+        if(employee.getRole() === "Engineer") {
+            return `GitHub: ${employee.github}`;
+        }
+        if(employee.getRole() === "Intern") {
+            return `School: ${employee.school}`;
+        }
     }
-    return html;
-}
 
-let html = `< !DOCTYPE html >
-<html lang="en">
+    function htmlCards() {
+        let html = "";
+        for(var i = 0; i < teamArray.length; i++) {
+            html += `<div class="card bg-dark justify-content-center align-items-center" style="width: 18rem;">
+            <div class="col card-header">
+                <h4>${teamArray[i].name}</h4>
+            </div>
+            <div class="col card-header">
+                <h4>${teamArray[i].getRole()}</h4 >
+            </div >
+            <ul class="list-group list-group-flush text">
+                <li class="list-group-item">ID: ${teamArray[i].id}</li>
+                <li class="list-group-item">Email: ${teamArray[i].email}</li>
+                <li class="list-group-item"> ${roleItem(teamArray[i])}</li>
+            </ul>
+        </div > `
+        }
+        return html;
+    }
+
+    let html = `
+    <!DOCTYPE html>
+    <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -179,16 +180,22 @@ let html = `< !DOCTYPE html >
             </style>
     </head>
 
-    <body>
-        <nav class="navbar navbar-dark bg-dark justify-content-center align-items-center">
-            <span class="navbar-brand mb-0 h1">
-                <h1>My Team</h1>
-            </span>
-        </nav>
-        <div class="row">
-            ${htmlCards()}
-        </div>
-    </body>
-</html>`
+        <body>
+            <nav class="navbar navbar-dark bg-dark justify-content-center align-items-center">
+                <span class="navbar-brand mb-0 h1">
+                    <h1>My Team</h1>
+                </span>
+            </nav>
+            <div class="row">
+                ${htmlCards()}
+            </div>
+        </body>
+    </html>`
 
-assembleTeam()
+    fs.writeFile("./dist/myteam.html", html, function(err) {
+        if(err) throw err;
+        console.log("Your file has been created successfully!");
+    });
+}
+
+assembleTeam();
