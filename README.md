@@ -23,6 +23,7 @@ This application uses node.js and the npm inquirer package as it's core technolo
 
 ## Application Demo
 
+https://user-images.githubusercontent.com/99947655/165204617-ddd7d97b-8db4-4af3-b01e-8de7900dcdaa.mp4
 
 
 ## Usage Instructions
